@@ -1,6 +1,6 @@
 # Lessons 1-3: Quick reference
 
-[Course overview](README.md) · [Learning progress](PROGRESS.md)
+[Course overview](README.md) · [Course status](COURSE_STATUS.md)
 
 ## Timing
 

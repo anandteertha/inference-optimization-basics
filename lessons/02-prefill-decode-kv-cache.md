@@ -100,7 +100,7 @@ This is distinct from caching a completed answer or reusing a prompt prefix acro
 | A | 4,000 tokens | 20 tokens | More prefill work; long context at generation start |
 | B | 20 tokens | 4,000 tokens | More sequential generation steps; context grows substantially |
 
-Anand correctly identified these differences. Same model and backend do not guarantee equal ITL: context length and serving conditions also matter. Token counts alone do not establish a precise total-runtime ordering.
+Same model and backend do not guarantee equal ITL: context length and serving conditions also matter. Token counts alone do not establish a precise total-runtime ordering.
 
 ## Recall before moving on
 
@@ -111,7 +111,7 @@ Anand correctly identified these differences. Same model and backend do not guar
 <details>
 <summary>Check your answers</summary>
 
-1. Six. Anand answered this checkpoint correctly.
+1. Six. Paris has been selected but has not yet been processed as an input.
 2. Processing Paris produces the scores for the token after Paris and adds Paris's own cache entries.
 3. No. It saves recalculation; attention still accesses relevant cached data.
 

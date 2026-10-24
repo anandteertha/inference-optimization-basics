@@ -73,9 +73,9 @@ New total response time = 0.3 + 5 × 0.08 = 0.7 seconds
 
 The response finishes earlier. Its subsequent tokens remain 0.08 seconds apart, and their rate remains 12.5 tokens/second. The whole-request output rate improves because its denominator becomes smaller.
 
-## Reviewed work
+## Common distinction: first token versus final token
 
-Anand correctly calculated 12.5 tokens/second and explained that improving TTFT alone need not change ITL. The initial final-token answer of 0.6 seconds came from reading the question as asking for the first token; the corrected final-token time is 1.0 second. This was clarified as a reading slip.
+In this example, 0.6 seconds is the first-token arrival time, while 1.0 second is the final-token arrival time. Improving TTFT alone can reduce total response time without changing ITL. Always check which event a timing question refers to.
 
 ## Recall before moving on
 

@@ -29,11 +29,11 @@ The diagram is a simplified dependency, not a complete hardware layout.
 
 A model fitting entirely in GPU memory answers only the capacity question. Slow transfers can leave computing units waiting. Conversely, fast transfers do not remove a large arithmetic workload.
 
-**Reviewed understanding:** Anand explained both cases correctly and identified hardware changes and algorithmic improvements as possible responses.
+Hardware changes can increase available throughput or bandwidth. Software and algorithmic changes can reduce required computation or data movement. Choose an improvement based on the limiting resource.
 
 ## 2. What does “shared weights” mean?
 
-Use the attention matrices you already know. Within one layer, four input positions use the same query-projection matrix:
+An attention projection transforms an input representation using a learned matrix. W_Q produces queries, W_K produces keys, and W_V produces values. Within one layer, four input positions use the same query-projection matrix:
 
 ```text
 q1 = x1 W_Q
@@ -110,7 +110,7 @@ A matrix piece usually requires many operations per row. For it, say “six row-
 
 The broader idea is **arithmetic intensity**: arithmetic work per amount of data moved, often expressed as operations per byte. The relevant memory level and all relevant transfers matter in a full analysis. Our example isolates weight traffic to explain one contribution.
 
-Anand correctly reasoned that more uses of each fetched weight give more arithmetic per fetch.
+More uses of each fetched weight give more arithmetic per fetch.
 
 ## 6. How reuse can shift the bottleneck
 
@@ -134,7 +134,7 @@ The six-row operation does more total work than the one-row operation. A greater
 
 ## 7. Separate task times need not add
 
-For unchanged work, making transfer faster does not automatically shorten arithmetic time. Anand correctly identified this distinction.
+For unchanged arithmetic work and compute throughput, making transfer faster does not automatically shorten arithmetic time.
 
 However, computation can sometimes use one piece of data while another piece is being fetched. Work can overlap.
 
@@ -168,7 +168,7 @@ Step time is at least max(compute demand, memory demand)
 
 Use compatible precision, units, memory levels, and definitions. Actual performance must be measured; the model omits other costs.
 
-## 8. Reviewed final exercise
+## 8. Worked optimization comparison
 
 Original requirements: 2 ms arithmetic and 8 ms transfer. Assume perfect overlap, unchanged work, and no other overheads. Each optimization below starts from the original case.
 
@@ -178,7 +178,7 @@ Original requirements: 2 ms arithmetic and 8 ms transfer. Assume perfect overlap
 | Double compute throughput | 1 ms | 8 ms | max(1, 8) = 8 ms | Memory bandwidth |
 | Double memory bandwidth instead | 2 ms | 4 ms | max(2, 4) = 4 ms | Memory bandwidth |
 
-**Anand answered all three correctly**, including the fact that memory remains the bottleneck after performance improves.
+Memory remains the bottleneck in all three cases, including the case where performance improves.
 
 Improving a bottleneck does not necessarily remove it. Here, transfer becomes twice as fast but still takes longer than arithmetic.
 
@@ -198,7 +198,7 @@ Improving a bottleneck does not necessarily remove it. Here, transfer becomes tw
 2. The same learned W_Q is applied to different input representations in that layer.
 3. It saves repeated weight movement; each input still requires its calculations.
 4. No. There are fewer new token rows available together, not different learned projection weights.
-5. max(6, 2) = 6 ms. Anand answered this checkpoint correctly.
+5. max(6, 2) = 6 ms; arithmetic remains the limiting resource.
 6. Yes: reducing transfer from 8 ms to 4 ms with 2 ms arithmetic improves the ideal step time from 8 ms to 4 ms, while memory remains limiting.
 
 </details>
