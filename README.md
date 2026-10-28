@@ -31,17 +31,19 @@ A suggested daily session is 45-60 minutes: brief recall, one focused lesson, an
 
 ## Read the completed lessons
 
-Lessons 1-3 are available. Start with the notes below for explanations, worked examples, diagrams, and self-check exercises with answers.
+Lessons 1-4 are available. Start with the notes below for explanations, worked examples, diagrams, and self-check exercises with answers.
 
 | Reading | Contents |
 | --- | --- |
 | [Lesson 1: Inference metrics](lessons/01-inference-metrics.md) | Token timelines, timing formulas, and the difference between two token-rate definitions |
 | [Lesson 2: Prefill, decode, and KV cache](lessons/02-prefill-decode-kv-cache.md) | The six-token France prompt, first-token selection, and the cache at every stage |
 | [Lesson 3: Compute and memory bottlenecks](lessons/03-compute-memory-bottlenecks.md) | Projection matrices, weight reuse, resource limits, overlap, and worked calculations |
+| [Lesson 4: Batching and serving](lessons/04-batching-and-serving.md) | Weight reuse across requests, scheduling traces, queueing, tail latency, and memory constraints |
+| [Lesson 4: Batching experiments](lessons/04-batching-experiments.md) | Runnable scheduling simulation, CPU matrix-multiplication example, and interpretation of results |
 | [Quick reference](REFERENCE.md) | Formulas and distinctions for a short refresher |
 | [Course status](COURSE_STATUS.md) | Available material and upcoming topics |
 
-Recommended catch-up order: read the quick reference, revisit any unclear lesson, then try its recall questions before opening the answers. Lesson 4 is the next planned addition. Coding begins after Lesson 8.
+Recommended catch-up order: read the quick reference, revisit any unclear lesson, then try its recall questions before opening the answers. Lesson 5 is the next planned addition. Coding begins after Lesson 8; Lesson 4 also links optional demonstrations already available in the repository.
 
 ## Prerequisites
 

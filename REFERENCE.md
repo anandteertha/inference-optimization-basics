@@ -1,4 +1,4 @@
-# Lessons 1-3: Quick reference
+# Lessons 1-4: Quick reference
 
 [Course overview](README.md) · [Course status](COURSE_STATUS.md)
 
@@ -71,8 +71,35 @@ Real execution may take longer. Faster arithmetic does not directly shorten tran
 
 **Rule:** Improve the resource that limits the actual workload. A useful optimization may leave the same resource as the bottleneck.
 
+## Batching and serving
+
+Batch size counts grouped execution work; concurrency counts outstanding requests within a stated boundary. Dynamic formation collects requests before execution; continuous scheduling can replace finished requests between generation iterations.
+
+For B ready decode requests, each producing one token per step of duration T seconds:
+
+```text
+Aggregate output rate = B / T tokens/s
+Each request's ITL = T (assuming no scheduling gaps)
+Amortized execution cost per token = T / B
+```
+
+A larger batch can improve aggregate throughput while increasing each request's latency. An assembly timeout does not cap waiting for a busy worker. Report offered load, achieved throughput, actual batch sizes, latency percentiles, and SLO passing fraction together.
+
+For stable long-run averages with matching boundaries, Little's law gives `outstanding requests = achieved requests/s × mean response seconds`. Outstanding requests include queued and executing work; they need not equal batch size.
+
+Approximate KV bytes for a uniform fixed layout:
+
+```text
+2 × layers × KV_heads × head_dimension × bytes_per_element
+  × sum(cached_positions_per_active_request)
+```
+
+This excludes allocation overhead, other model memory, and prefix sharing. Reserve capacity for context growth. More requests can exhaust KV capacity even when weights fit.
+
 ## Read more slowly when needed
 
 - [Lesson 1: Definitions and worked timelines](lessons/01-inference-metrics.md)
 - [Lesson 2: The full prompt-to-answer walkthrough](lessons/02-prefill-decode-kv-cache.md)
 - [Lesson 3: Weight reuse and resource reasoning](lessons/03-compute-memory-bottlenecks.md)
+
+- [Lesson 4: Batching, scheduling, and serving constraints](lessons/04-batching-and-serving.md)

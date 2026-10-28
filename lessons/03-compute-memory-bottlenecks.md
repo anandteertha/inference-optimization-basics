@@ -2,7 +2,7 @@
 
 [Previous: Prefill and decode](02-prefill-decode-kv-cache.md) · [Course overview](../README.md) · [Quick reference](../REFERENCE.md)
 
-**Status:** Complete. Lesson 4, batching and serving, is next. Every numerical example here is hypothetical; none is a GPU benchmark.
+**Status:** Complete. [Lesson 4, batching and serving](04-batching-and-serving.md), is next. Every numerical example here is hypothetical; none is a GPU benchmark.
 
 ## 1. Separate storing, moving, and calculating
 
